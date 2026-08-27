@@ -1,0 +1,45 @@
+\documentclass[12pt]{article}
+
+% --- Paquetes esenciales para matemáticas y formato ---
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel} % Adaptación al español
+\usepackage{amsmath, amsfonts, amssymb} % Símbolos y entornos matemáticos
+\usepackage{amsthm} % Entornos de teoremas y ejercicios
+\usepackage{geometry} % Configuración de márgenes
+\geometry{a4paper, margin=2.5cm}
+
+% --- Definición de entorno para ejercicios ---
+\theoremstyle{definition}
+\newtheorem{ejercicio}{Ejercicio}
+
+% --- Datos del documento ---
+\title{Apuntes y Ejercicios}
+\author{Notas de Estudio}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Conceptos Básicos}
+Una fórmula matemática en línea se escribe entre signos de pesos: $E = mc^2$. 
+
+Para centrar una ecuación en un bloque independiente:
+\[
+\int_{a}^{b} f(x) \, dx = F(b) - F(a)
+\]
+
+\section{Lista de Ejercicios}
+
+\begin{ejercicio}
+Calcule la derivada de la función $f(x) = x^3 + 2x^2 - 5$.
+\end{ejercicio}
+
+\begin{ejercicio}
+Demuestre la siguiente identidad utilizando las propiedades fundamentales:
+\begin{equation}
+\sin^2(\theta) + \cos^2(\theta) = 1
+\end{equation}
+\end{ejercicio}
+
+\end{document}
