@@ -8,20 +8,23 @@
 \usepackage{geometry} % Configuración de márgenes
 \geometry{a4paper, margin=2.5cm}
 
+% --- Paquete para escribir código ---
+\usepackage{listings}
 % --- Definición de entorno para ejercicios ---
 \theoremstyle{definition}
 \newtheorem{ejercicio}{Ejercicio}
 
 % --- Datos del documento ---
 \title{Apuntes y Ejercicios}
-\author{Notas de Estudio}
+\author{Martín Mateos}
 \date{\today}
 
 \begin{document}
 
 \maketitle
 
-\section{Conceptos Básicos}
+\section{Guia de ayuda para escritura Latex}
+
 Una fórmula matemática en línea se escribe entre signos de pesos: $E = mc^2$. 
 
 Para centrar una ecuación en un bloque independiente:
@@ -29,7 +32,7 @@ Para centrar una ecuación en un bloque independiente:
 \int_{a}^{b} f(x) \, dx = F(b) - F(a)
 \]
 
-\section{Lista de Ejercicios}
+
 
 \begin{ejercicio}
 Calcule la derivada de la función $f(x) = x^3 + 2x^2 - 5$.
@@ -42,4 +45,36 @@ Demuestre la siguiente identidad utilizando las propiedades fundamentales:
 \end{equation}
 \end{ejercicio}
 
+\section{Repaso de demostraciones}
+
+\subsection{Guía práctica 1}
+\section{Introducción a grafos}
+
+\subsection{Guia práctica 2}
+hola
+\subsection{Algoritmos sobre grafos}
+Esta sección define el ordenamiento topológico para luego hacer énfasis encómo recorrer un grafo mediante 
+algoritmos, los costos operacionales de estos, las demostraciones formales de los algoritmos y la información
+obtenida luego de sus implementaciones. Finalmente,
+se verá qué es una arista de corte y cual es su importancia.
+
+\subsubsection{Representación}
+Como objeto matemático, un grafo es un par ordenado $G = (V, E) : v,w \in V, \\ (v,w) \in W$. Como estructura
+de datos, un grafo puede representarse mediante una lista enlazada o una matriz de dimensión $n\times n$ con
+$n = |V(G)|$. \\
+Cada estructura debe admitir las siguientes operaciones:
+\begin{itemize}
+    \item Consultar si $(v,w) \in E$.
+    \item Recorrer $N(v)$.
+    \item Insertar o remover aristas.
+    \item Insertar o remover vértices.
+\end{itemize}
+
+Donde |adj|  $N(v) = \{ w \in V: (v,w) \in E \}$
+
+\subsubsection{Ordenamiento topológico}
+\subsubsection{Recorrridos sobre grafos - BFS}
+\subsubsection{Recorrridos sobre grafos - DFS}
+\subsubsection{Aristas de corte}
 \end{document}
+
