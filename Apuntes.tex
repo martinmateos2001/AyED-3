@@ -6,13 +6,30 @@
 \usepackage{amsmath, amsfonts, amssymb} % Símbolos y entornos matemáticos
 \usepackage{amsthm} % Entornos de teoremas y ejercicios
 \usepackage{geometry} % Configuración de márgenes
+\usepackage{chngcntr} % --- Definición de entorno para ejercicios ---
 \geometry{a4paper, margin=2.5cm}
+
+
 
 % --- Paquete para escribir código ---
 \usepackage{listings}
-% --- Definición de entorno para ejercicios ---
+\usepackage{xcolor} % Para darle color al código (opcional)
+
+% Configuración opcional para que se vea estilo "caja de código"
+\lstset{
+  basicstyle=\ttfamily,          % Fuente monoespaciada (Courier / Typewriter)
+  backgroundcolor=\color{gray!10},% Fondo gris claro muy sutil
+  breaklines=true                 % Permite saltos si el código es muy largo
+}
+
+
+
+% Define tu entorno de ejercicio
 \theoremstyle{definition}
 \newtheorem{ejercicio}{Ejercicio}
+
+% Reinicia el contador 'ejercicio' con cada 'subsubsection'
+\counterwithin*{ejercicio}{subsubsection}
 
 % --- Datos del documento ---
 \title{Apuntes y Ejercicios}
@@ -22,7 +39,8 @@
 \begin{document}
 
 \maketitle
-
+\tableofcontents
+\newpage
 \section{Guia de ayuda para escritura Latex}
 
 Una fórmula matemática en línea se escribe entre signos de pesos: $E = mc^2$. 
@@ -70,11 +88,65 @@ Cada estructura debe admitir las siguientes operaciones:
     \item Insertar o remover vértices.
 \end{itemize}
 
-Donde |adj|  $N(v) = \{ w \in V: (v,w) \in E \}$
+Donde \lstinline|adj[v] =| $N(v) = \{ w \in V: (v,w) \in E \}$, es decir el conjunto de vecinos de $v$.
+
+Una implementacion del grafo como lista enlazada de $n$ nodos $V = \{v_1, v_2, ... , v_n \}$ sobre listas 
+sería:
+\begin{lstlisting}
+    Nodo{
+        id: Insertar
+        ady: List<Nodo>
+    }
+
+    Grafo{
+        nodos: List<Nodo>
+    }
+\end{lstlisting}
+
+Entonces cada nodo en la lista hace referencia a sus vecinos, mientras que una implementacion del grafo por
+una matriz es simplemente una lista de listas donde el elemnto $ij$ representa que si existe $(v_i, v_j )$.
+A continuación dejo las complejidades de cada estructura, con $n=V(D) \land m=A(D)$:
+
+\begin{table}[h!]
+    \begin{center}
+        \begin{tabular}{l l l }
+            Operación   & Lista Enlazada  & Matriz \\ \hline
+            Espacio     & $\Theta(n + m)$ & $\Theta(n^2)$ \\
+            Consultar $(v,w) \in E(D)$ & $O(d(v))$ & $O(n^2)$ \\
+            Recorrer $N(v)$ & $O(d(v))$ & $O(n)$ \\
+            Recorrer todas las aristas & $O(n + m)$ & $O(n^2)$ \\ \hline
+        \end{tabular}
+    \end{center}
+\end{table}
+
+
+Si el grafo posee pesos, estos se almacenan junto con sus vecinos. Para listas \lstinline|adj(v)|=
+$<(w_1, p_1), ... , (w_k, p_k)>$ y para la matriz simplemente el valor del peso en el elemento $ij$ teniendo
+en cuenta que \lstinline|D[i][j] = null|indica la ausencia de adyacencia.
 
 \subsubsection{Ordenamiento topológico}
+Sea $D=(V,E)$ un digrafo. Un \textbf{ordenamiento topológico} de $D$ es un orden lineal $v_1, v_2, ..., v_n \in V(D)$
+tal que $v_i \rightarrow v_j \in V(D) \Rightarrow i<j$.
+
+\textbf{Lema:}
+\begin{center}
+    Todo digrafo acíclico (DAG) tiene un vértice $v$ tal que $d(v)=0$.
+\end{center}
+
+\textbf{Teorema:}
+\begin{center}
+    Un digrafo admite ordenamiento topológico si y sólo si es acíclico.
+\end{center}
+
+Demostraciones en apuntes.
+
 \subsubsection{Recorrridos sobre grafos - BFS}
 \subsubsection{Recorrridos sobre grafos - DFS}
 \subsubsection{Aristas de corte}
+\subsubsection{Guía práctica 3}
+
+\begin{ejercicio}
+    
+\end{ejercicio}
 \end{document}
 

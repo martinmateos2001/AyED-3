@@ -1,0 +1,13 @@
+\babel@toc {spanish}{}\relax 
+\contentsline {section}{\numberline {1}Guia de ayuda para escritura Latex}{2}{}%
+\contentsline {section}{\numberline {2}Repaso de demostraciones}{2}{}%
+\contentsline {subsection}{\numberline {2.1}Guía práctica 1}{2}{}%
+\contentsline {section}{\numberline {3}Introducción a grafos}{2}{}%
+\contentsline {subsection}{\numberline {3.1}Guia práctica 2}{2}{}%
+\contentsline {subsection}{\numberline {3.2}Algoritmos sobre grafos}{2}{}%
+\contentsline {subsubsection}{\numberline {3.2.1}Representación}{2}{}%
+\contentsline {subsubsection}{\numberline {3.2.2}Ordenamiento topológico}{3}{}%
+\contentsline {subsubsection}{\numberline {3.2.3}Recorrridos sobre grafos - BFS}{3}{}%
+\contentsline {subsubsection}{\numberline {3.2.4}Recorrridos sobre grafos - DFS}{3}{}%
+\contentsline {subsubsection}{\numberline {3.2.5}Aristas de corte}{3}{}%
+\contentsline {subsubsection}{\numberline {3.2.6}Guía práctica 3}{3}{}%
