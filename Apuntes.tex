@@ -146,7 +146,111 @@ Demostraciones en apuntes.
 \subsubsection{Guía práctica 3}
 
 \begin{ejercicio}
+    Para un grafo $G$ el \textbf{conjunto de vencidarios} o conjunto de adyacencias es el par $(V(G), N)$ 
+    donde $N$ es la función definida en la sección \textbf{3.2.1} que devuelve el conjunto de vecinos de un 
+    vector $v \in V(G)$.
+
+    Suponer que los vértices dados son el conjunto $\{0, 1, ..., |V(G)|-1\}$.
     
+    Discutir las ventajas y desventajas en cuanto a la complejidad temporal y espacial de las siguientes 
+    implementaciones del conjunto de vencidarios del grafo $G$, de acuerdo a las siguientes operaciones:
+    \begin{enumerate}
+        \item Inicializar la estructura a partir de una secuencia de vértices y una secuencia de aristas 
+        de $G$.
+        \item Determinar si dos vértices v y w son adyacentes.
+        \item Recorrer y/o procesar el vecindario N (v) de un vértice v dado.
+        \item Insertar un vértice $v$ con su conjunto de vecinos $N (v)$.
+        \item Insertar una arista $(v, w)$.
+        \item Remover un vértice $v$ con todas sus adyacencias.
+        \item Remover una arista $(v, w)$.
+        \item Mantener un orden de $N (v)$ de acuerdo a algún invariante que permita recorrer cada vecindario
+         en un orden dado.
+    \end{enumerate}
+    \textbf{Estructuras de datos:}
+    \begin{enumerate}
+        \item La función $N$ se representa con una secuencia (arreglo dinámico o lista enlazada) que en 
+        cada posición $v$ tiene el conjunto $N (v)$ implementado a su vez sobre una secuencia (arreglo 
+        dinámico o lista enlazada). Cada vértice es una estructura que tiene un índice para acceder en $O(1)$ 
+        a $N (v)$. Esta representación se conoce comúnmente como lista de adyacencias.
+        \item Ídem anterior, pero cada $w \in N (v)$ se almacena junto con un índice a la posición que ocupa 
+        $v$ en $N (w)$. Esta representación también se conoce como lista de adyacencias, pero tiene información 
+        para implementar operaciones dinámicas.
+        \item $N (v)$ se representa con un arreglo dinámico que en cada posición i tiene un arreglo dinámico de 
+        booleanos $A_i$ con $|V (G)|$ posiciones tal que $A_i[j]$ es verdadero si y solo si $i$ es adyacente 
+        a $j$. Esta representación se conoce comúnmente como matriz de adyacencias.
+        \item $N (v)$ se representa con un arreglo dinámico que en cada posición tiene el conjunto $N (v)$ 
+        implementado con una tabla de hash. Esta representación es un mix entre las representaciones clásicas 
+        de matriz de adyacencias y lista de adyacencias.
+    \end{enumerate}
 \end{ejercicio}
+
+\textbf{Respuestas:}
+
+Voy a definir el largo de la secuencia de vectores con $n$ y el largo de la secuencia de aristas con $m$.
+
+\textbf{1.1}) 
+\begin{verbatim}
+    Es es List<List<Int>>
+    Vs es List<Int>
+
+
+    inicializar(V:Vs, es:Es): list<list<int>>{
+        for(i=0, i++, V.len()){
+            res.append([])
+        }
+        forall e in es{  // recorro solo n (las aristas) O(len(n))
+            res[es[0]].append(es[1])
+            res[es[1]].append(es[0]) 
+        }
+    }
+\end{verbatim}
+
+Para arreglos, encolamos al final $n$ listas vacías ($O(n)$), luego recorremos la vecindad obteniendo las 
+aristas $(v,w)$ tal que \lstinline|res[v].append(w)| en cada iteración. Esto es $O(m)$.
+
+En el caso de las listas enlazadas habría que recorrer la lista de vectores ($O(n)$), luego ordenarla para
+que el numero de la posición coincida con los vectores ($O(n^2)$). Nos movemos a la secuencia de aristas y 
+en la posición v de res colocamos w y viceversa, acceder a un elemento en en la lista enlazada es $O(n)$ y 
+como lo hacemos $m$ veces tenermos que la complejidad de almacenar una arista es $O(n \cdot m)$.
+
+Finalmente la complejidad total es $O(n^2 + n \cdot m)$
+
+En cuanto al espacio utilizado, los arrays toman $O(n+m)$ y las listas enlazadas $O(n + m)$, así que por lo
+tanto, desempatando por la complejidad temporal me quedo con los arreglos.
+
+\textbf{1.2}
+En listas enlazadas buscar a $v$ es $O(n)$ y buscar a $w$ es $O(d(v))$, por lo tanto la complejidad de 
+determinar si $w \in N(v)$ es $O(n + d(v))$.
+
+En arreglos dinámicos buscar a $v$ y $w$ es $O(1)$
+
+\begin{ejercicio}
+    -Enunciado-
+\end{ejercicio}
+\textbf{Respuesta:}
+Para ver mejor los algoritmos intento implementarlos. Para el algoritmo cúbico, busco vectores conectados
+entre sí tal que si $A$ es la matriz de adyacencias entonces $A_{vw} \ A_{wz} \ A_{wv} = 1$.
+\begin{verbatim}
+    {
+        for(v=0, v++, A.lenght){
+            for(w=0, v++, A.lenght){
+                for(z=0, v++, A.lenght){
+                    return A[v][w]*A[w][z]*A[z][w] == 1
+                }
+            }
+        }
+    }
+\end{verbatim}
+
+\textbf{a)} El algoritmo es correcto porque explora todas las combinaciones posibles.
+
+\textbf{b)} En el peor caso los ultimos 3 vertices forman un triangulo de forma tal que el numero de
+iteraciones es $n(n-1)(n-2) \subset O(n^3)$.
+
+¿Como pruebo que es $\Omega(n^3)$?
+
+
+\textbf{c)} 
+
 \end{document}
 
