@@ -227,30 +227,50 @@ En arreglos dinámicos buscar a $v$ y $w$ es $O(1)$
 \begin{ejercicio}
     -Enunciado-
 \end{ejercicio}
-\textbf{Respuesta:}
-Para ver mejor los algoritmos intento implementarlos. Para el algoritmo cúbico, busco vectores conectados
+\textbf{Respuestas para el algoritmo cúbico:}
+Para ver mejor el algoritmo intento implementarlo en pseudocódigo, busco vectores conectados
 entre sí tal que si $A$ es la matriz de adyacencias entonces $A_{vw} \ A_{wz} \ A_{wv} = 1$.
 \begin{verbatim}
-    {
-        for(v=0, v++, A.lenght){
-            for(w=0, v++, A.lenght){
-                for(z=0, v++, A.lenght){
-                    return A[v][w]*A[w][z]*A[z][w] == 1
+    
+    for(v=0, v++, A.lenght){ // n op
+        for(w=1, v++, A.lenght){ // n-1 ops
+            for(z=2, v++, A.lenght){ // n-2 ops
+                if (A[v][w]*A[w][z]*A[z][w] == 1){ // 1 ops
+                    return true; //1 ops
                 }
             }
         }
     }
+    
 \end{verbatim}
 
-\textbf{a)} El algoritmo es correcto porque explora todas las combinaciones posibles.
+\textbf{a)} El algoritmo es correcto porque explora todas las combinaciones posibles de triángulos.
 
-\textbf{b)} En el peor caso los ultimos 3 vertices forman un triangulo de forma tal que el numero de
-iteraciones es $n(n-1)(n-2) \subset O(n^3)$.
+\textbf{b)} Para responder apropiadamente debo ver el numero de operaciones.
+\begin{align*}
+    T(n) &=  \sum_{v=0}^{n} \sum_{w=2}^{n} \sum_{z=3}^{n} 2 \\
+    &= 2(\sum_{v=1}^{n} \sum_{w=1}^{n-1} \sum_{z=1}^{n-2} 1) \\
+    &= 2 (n-2) (\sum_{v=1}^{n} \sum_{w=1}^{n-1}1) \\
+    &= (n-2) (n-1)\sum_{v=1}^{n} 1 \\
+    &= (n-2) (n-1) n
+\end{align*}
 
-¿Como pruebo que es $\Omega(n^3)$?
+Como $T(n) \approx n^3 \land n^3 \in O(n^3) \land n^3\in \Omega(n^3) \implies T(n) \in \Theta(n^3)$ (habría
+que demostrar los dos pertenece anterior).
 
+\textbf{c)} El peor caso ya lo mencioné, cuando el triangulo son los últimos 3 nodos. El mejor caso serían
+los tres primeros nodos.
 
-\textbf{c)} 
+\textbf{Respuestas algoritmo cuadrado:}
+Si la lista de adyacencias es \lstinline|L:list<list<int>>|, iniciarla es $O(n+m)$:
+\begin{verbatim}
+    for(v=0, v++, L.lenght){ 
+        visitados = []
+        for(j=0, w++, L[v].lenght){ // O(n)
+            if(pertenece(L[v][j], visitados))
+        }
+    }
+\end{verbatim}
 
 \end{document}
 
