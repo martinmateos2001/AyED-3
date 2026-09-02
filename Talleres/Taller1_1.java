@@ -6,7 +6,7 @@ import java.util .*;
 Para leer datos: BufferedReader + Scanner (importados de java.io y java.util)
 Para imprimir datos: BufferedWriter + PrintWriter
 */
-public class Taller1 {
+public class Taller1_1 {
 
     /* Devuelve el nivel del nodo o profundidad a la que está.
     Modifica la lista auxiliar colocando un 1, indicando que el nodo ya se recorrió.
