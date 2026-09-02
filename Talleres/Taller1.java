@@ -13,8 +13,8 @@ public class Taller1 {
      */
     public static int nivel(int nodo, int[] ls, int[] niveles){
         int p = ls[nodo]; // p es el superior de nodo.
-        if (ls[nodo] == -1){ // Si es raiz entonces no aporta
-            return 0;
+        if (ls[nodo] == -1){ // Si es raiz entonces no aporta -- Si aporta, es el último nivel y lo tengo que contar.
+            return 1;
         }
         if(niveles[nodo] != 0){ // Si fue calculado es distinto de cero o es una raíz que en el proximo paso se calcula en O(1)
             return niveles[nodo];
