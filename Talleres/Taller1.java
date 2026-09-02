@@ -7,6 +7,22 @@ Para leer datos: BufferedReader + Scanner (importados de java.io y java.util)
 Para imprimir datos: BufferedWriter + PrintWriter
 */
 public class Taller1 {
+
+    /* Devuelve el nivel del nodo o profundidad a la que está.
+    Modifica la lista auxiliar colocando un 1, indicando que el nodo ya se recorrió.
+     */
+    public static int nivel(int nodo, int[] ls, int[] niveles){
+        int p = ls[nodo]; // p es el superior de nodo.
+        if (ls[nodo] == -1){ // Si es raiz entonces no aporta
+            return 0;
+        }
+        if(niveles[nodo] != 0){ // Si fue calculado es distinto de cero o es una raíz que en el proximo paso se calcula en O(1)
+            return niveles[nodo];
+        }
+        // si no fue caculado le sumo 1 mas la cantidad de superirores que tenga, en cada recursion tambien guardo el nivel del nodo.
+        niveles[nodo] = 1 + nivel(p, ls, niveles);
+        return niveles[nodo];
+    }
     public static void main(String[] args) {
         /* Con esto segun el apunte puedo imprimir
         System.out -> salida a consola
@@ -32,29 +48,53 @@ public class Taller1 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         Scanner scanner = new Scanner(br);
         
-        //Puesto en práctica, supongo que es la entrada de mi problema a resolver.
+        /* Puesto en práctica, supongo que es la entrada de mi problema a resolver.
         printer.println("Ingrese la cantidad de socio-vendedores");
-        printer.flush();
-        int entrada = scanner.nextInt(); // En el taller la primera entrada es la cantidad de nodos.
+        printer.flush(); 
+        */
+        int n = scanner.nextInt(); // En el taller la primera entrada es la cantidad de nodos.
 
         // Ahora vienen las relaciones. Las guardo en un arreglo.
-        ArrayList<Integer> padres = new ArrayList<Integer>(entrada);
-        for(int i=0; i < entrada; i++){
+        int[] superiores = new int[n+1]; // Vienen numerados del 1 al n incluido.
+        for(int i=1; i < n+1; i++){
+            /*
             printer.println("Ingrese el superior inmediato del nodo " + i);
             printer.flush();
+            */
             int p = scanner.nextInt(); // El padre del nodo i es p o en terminos del ejercicio p revende a i
-            padres.add(i, p); 
+            superiores[i] = p; 
         }
+        /* 
         printer.println("la lista de superiores es:");
-        for(int i = 0; i<entrada;i++){
-            printer.println(padres.get(i));
+        for(int i = 0; i<n;i++){
+            printer.println(superiores[i]);
         }
-        printer.close();
-        scanner.close();
+        */
+        
+        // no necesito recopilar mas nada.
+        scanner.close(); 
 
         /*Ya escaneé los datos que necesito, ahora busco la profundidad.
         La profundidad de un arbol con n nodos es log(n).
         Como busco la máxima profundidad que existe dentro de los arboles de los nodos el problema escala a n.log(n).
+        Esto es un poco a la fuerza bruta, ¿como lo puedo mejorar?
+        En una lista auxiliar indico los nodos procesados, y tomo un contador de nodos procesados porque un arbol tiene n-1
+        aristas para n nodos, lo que siguiere que como maximo hay n-1 niveles. Cuando res >= r, con r los nodos restantes, el arbol
+        posible que exista tendra r-1 aristas y por lo tanto ya no habrá un nivel mas profundo que res.
+        Esta idea está pues corta caminos. Si un nodo ya fue procesado y luego existe un nodo mas abajo cuando el algoritmo suba lo
+        va a cortar.
+        Si aprovecho la recursión para calcular el nivel de todos los nodos procesados, en vez de cortar simplemente sumo los niveles.
         */
+        int[] niveles = new int[n+1];
+        int res = 0;
+        for(int i = 1; i < n+1; i++){ // Para cada nodo del 0 al n-1
+            int i_nivel = nivel(i, superiores, niveles); // Calculo el nivel
+            if (res < i_nivel){ // si el nivel de i es mayor que el encontrado entonces lo actualizo.
+                res = i_nivel;
+            }
+        }
+        printer.println(res);
+        printer.close();
+
     }
 }
