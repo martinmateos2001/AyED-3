@@ -6,7 +6,7 @@ import java.util .*;
 public class Taller1_2 {
     
     public static void main(String[] args){
-        // Cargo los datos
+        // Armo los objetos para imprimir y leer por consola
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         PrintWriter printer = new PrintWriter(bw);
 
@@ -55,7 +55,39 @@ public class Taller1_2 {
         if(seq_bfs[0] != 1){
             printer.println("No");
         }
-        
-        
+
+        // Creo la cola de elementos a procesar: q
+        // q.offer(e) -> insertar e
+        // q.poll() -> obtiene y elimina, procesa el nodo.
+        // q.peek() -> consulta quien sigue.
+        Queue<Integer> q = new LinkedList<>();
+        q.offer(1);
+
+        // Creo arreglo de visitados para evitar ciclos
+        boolean[] visitados = new boolean[n+1];
+
+        // Arreglo del recorrido.
+        ArrayList<Integer> res = new ArrayList<>(n);
+
+        // Hago bfs
+        while(q.isEmpty() != false){
+            int e = q.poll();
+            res.add(e);
+            visitados[e] = true;
+            for(int v:adj.get(e)){
+                if(visitados[v] == false){
+                    q.offer(v);
+                }
+            }
+        }
+
+        // Comparo arreglos
+        for(int i = 0; i < n; i++){
+            if(res.get(i) != seq_bfs[i+1]){
+                printer.println("No");
+            }
+        }
+        printer.println("Yes");
+        printer.close();
     }
 }
