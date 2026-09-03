@@ -4,7 +4,18 @@ import java.lang.reflect.Array;
 import java.util .*;
 
 public class Taller1_2 {
-    
+    public static ArrayList<Integer> seqBFS(String s){
+        ArrayList<Integer> res = new ArrayList<>();
+        int i = 0;
+        while(i < s.length()){
+            String aux = s.substring(i, s.length());
+            int espacio = aux.indexOf(' ');
+            int v = Integer.parseInt(s.substring(i, espacio));
+            res.add(v);
+            i = espacio + 1;
+        }
+        return res;
+    }
     public static void main(String[] args){
         // Armo los objetos para imprimir y leer por consola
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
@@ -20,20 +31,18 @@ public class Taller1_2 {
         ArrayList<ArrayList<Integer>> adj = new ArrayList<>(n+1);
         for(int i = 1; i < n; i++){ // n+1 -> n relaciones
             String a = scanner.nextLine();
-            int v = a.charAt(0) - '0';
-            int w = a.charAt(2) - '0';
+            int pos_espacio = a.indexOf(' '); 
+            int v = Integer.parseInt(a.substring(0, pos_espacio));
+            int w = Integer.parseInt(a.substring(pos_espacio + 1, a.length()));
             adj.get(v).add(w);
             adj.get(w).add(v);
         }
         // bfs a chequear
-        String seq = scanner.nextLine();
+        String seq_string = scanner.nextLine();
         scanner.close();
-        String seq_sin_espacios = seq.replace(" ", "");
-        int[] seq_bfs = new int[n+1];
-        seq_bfs[0] = 0;
-        for(int i = 1; i < n+1; i = i + 2){
-            seq_bfs[i] = seq_sin_espacios.charAt(i) - '0';
-        }
+
+        ArrayList<Integer> seq_bfs = seqBFS(seq_string);
+        
 
         /*
         camino_bfs nos da un orden en el que se procesan los nodos.
@@ -42,8 +51,8 @@ public class Taller1_2 {
         representa el número de aparición en seq_bfs.
         */
         int[] orden = new int[n+1];
-        for(int i = 1; i < seq_bfs.length; i++){
-            orden[seq_bfs[i]] =  i;
+        for(int i = 1; i < seq_bfs.size(); i++){
+            orden[seq_bfs.get(i)] =  i;
         }
 
         // Reordeno las aristas
@@ -52,7 +61,7 @@ public class Taller1_2 {
         }
 
         // Ahora puedo implementar bfs sobre adj.
-        if(seq_bfs[0] != 1){
+        if(seq_bfs.get(0) != 1){
             printer.println("No");
         }
 
