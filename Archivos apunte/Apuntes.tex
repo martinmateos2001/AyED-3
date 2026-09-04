@@ -252,11 +252,14 @@ entre sí tal que si $A$ es la matriz de adyacencias entonces $A_{vw} \ A_{wz} \
     &= 2(\sum_{v=1}^{n} \sum_{w=1}^{n-1} \sum_{z=1}^{n-2} 1) \\
     &= 2 (n-2) (\sum_{v=1}^{n} \sum_{w=1}^{n-1}1) \\
     &= (n-2) (n-1)\sum_{v=1}^{n} 1 \\
-    &= (n-2) (n-1) n
+    &= (n-2) (n-1) n \\
+    &= (n^2-n)(n-2) \\
+    &= n^3-2n^2-n^2+2n \\
+    &= n^3 - 3n^2 + 2n
 \end{align*}
 
-Como $T(n) \approx n^3 \land n^3 \in O(n^3) \land n^3\in \Omega(n^3) \implies T(n) \in \Theta(n^3)$ (habría
-que demostrar los dos pertenece anterior).
+Como $T(n) \in O(n^3) \land T(n) \in \Omega(n^3) \implies T(n) \in \Theta(n^3)$. Habría que demostrar que
+los dos pertenece anteriores.
 
 \textbf{c)} El peor caso ya lo mencioné, cuando el triangulo son los últimos 3 nodos. El mejor caso serían
 los tres primeros nodos.
