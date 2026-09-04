@@ -10,4 +10,4 @@
 \contentsline {subsubsection}{\numberline {3.2.3}Recorrridos sobre grafos - BFS}{3}{}%
 \contentsline {subsubsection}{\numberline {3.2.4}Recorrridos sobre grafos - DFS}{3}{}%
 \contentsline {subsubsection}{\numberline {3.2.5}Aristas de corte}{3}{}%
-\contentsline {subsubsection}{\numberline {3.2.6}Guía práctica 3}{3}{}%
+\contentsline {subsection}{\numberline {3.3}Guía práctica 3}{3}{}%
