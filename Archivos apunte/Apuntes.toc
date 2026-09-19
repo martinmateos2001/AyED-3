@@ -11,3 +11,5 @@
 \contentsline {subsubsection}{\numberline {3.2.4}Recorrridos sobre grafos - DFS}{3}{}%
 \contentsline {subsubsection}{\numberline {3.2.5}Aristas de corte}{3}{}%
 \contentsline {subsection}{\numberline {3.3}Guía práctica 3}{3}{}%
+\contentsline {subsection}{\numberline {3.4}Divide \& Conquer}{6}{}%
+\contentsline {subsubsection}{\numberline {3.4.1}Guia Practica}{6}{}%

@@ -34,3 +34,5 @@ Por lo tanto para $ s = 2(2kq + k)$ se tiene que $mn=2s$ probando que $mn$ es un
 ![Foto Ejercicio 4](Imagenes/GP1%20Ej4.png)
 La proposición es $P(n): \forall n \in \mathbb{N}, n^2 \leq 3n $. 
 Para probar que la proposición es falsa doy el contraejemplo con $n = 4$ ya que $P(4): 4^2 \leq 3·4 \Leftrightarrow  16 \leq 12$ pero es falso que $16 \leq 12 $ y por lo tanto la proposición universal no se cumple.
+
+Función de Altura $h(T)$\[h(T) = \begin{cases} -1 & \text{si } T = \emptyset \[6pt] 1 + \max\big(h(T_{izq}), h(T_{der})\big) & \text{si } T \neq \emptyset \end{cases}\]Función de Diámetro / Distancia Máxima $D(T)$\[D(T) = \begin{cases} 0 & \text{si } T = \emptyset \[6pt] \max\Big(D(T_{izq}), ; D(T_{der}), ; h(T_{izq}) + h(T_{der}) + 2\Big) & \text{si } T \neq \emptyset \end{cases}\]
