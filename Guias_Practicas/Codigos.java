@@ -1,3 +1,4 @@
+package Guias_Practicas;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.ArrayList;
@@ -58,7 +59,7 @@ public class Codigos {
     - hijo derecho = (2*i) + 2
     - padre = (i-1) / 2
     */
-    public static int maxCamino(int[] abb){
+    public int maxCamino(int[] abb){
         
         return 0;
     }
@@ -90,7 +91,7 @@ public class Codigos {
      * Método principal que inicializa el arreglo temporal y 
      * llama al método recursivo.
      */
-    public static long contarInversiones(int[] A) {
+    public long contarInversiones(int[] A) {
         if (A == null || A.length == 0) {
             return 0;
         }
@@ -99,7 +100,7 @@ public class Codigos {
         return mergeSortYContar(A, temp, 0, n - 1);
     }
 
-    private static long mergeSortYContar(int[] A, int[] temp, int izq, int der) {
+    private long mergeSortYContar(int[] A, int[] temp, int izq, int der) {
         long invCount = 0;
         
         if (izq < der) {
@@ -117,7 +118,7 @@ public class Codigos {
         return invCount;
     }
 
-    private static long mergeYContar(int[] A, int[] temp, int izq, int medio, int der) {
+    private long mergeYContar(int[] A, int[] temp, int izq, int medio, int der) {
         int i = izq;         // Índice para el sub-arreglo izquierdo
         int j = medio + 1;   // Índice para el sub-arreglo derecho
         int k = izq;         // Índice para el arreglo temporal
@@ -153,10 +154,21 @@ public class Codigos {
         return invCount;
     }
 
+    // ------ Guia 6: Programación Dinámica ------
+    // E1: Ejercito del rey
+    public int ejercitoDelRey(int n){
+        int[] M = new int[n];
+        M[0] = 1;
+        M[1]= 1;
+        int res = ejercitoDelReyPD(n, M);
+        return res;
+    }
 
+    private int ejercitoDelReyPD(int n, int[]M){
+        if(M[n] == 0){
+            M[n] = ejercitoDelReyPD(n-1, M) + ejercitoDelReyPD(n-2, M);
+        }
+        return M[n];
+    }
     
-    public static void main(String[] args) {
-        System.out.println(exp(2, 8));
-        System.out.println(exp(2, 9));
-    }    
 }
