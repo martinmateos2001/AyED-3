@@ -160,11 +160,14 @@ public class Codigos {
         int[] M = new int[n];
         M[0] = 1;
         M[1]= 1;
-        int res = ejercitoDelReyPD(n, M);
+        int res = ejercitoDelReyPD(n-1, M);
         return res;
     }
 
     private int ejercitoDelReyPD(int n, int[]M){
+        if(n <2){
+            return M[n];
+        }
         if(M[n] == 0){
             M[n] = ejercitoDelReyPD(n-1, M) + ejercitoDelReyPD(n-2, M);
         }
