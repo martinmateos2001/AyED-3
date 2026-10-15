@@ -155,8 +155,11 @@ public class Codigos {
     }
 
     // ------ Guia 6: Programación Dinámica ------
-    // E1: Ejercito del rey
+    // E1: Ejercito del rey - Inciso d
     public int ejercitoDelRey(int n){
+        if(n < 2){
+            return 1;
+        }
         int[] M = new int[n];
         M[0] = 1;
         M[1]= 1;
@@ -164,7 +167,7 @@ public class Codigos {
         return res;
     }
 
-    private int ejercitoDelReyPD(int n, int[]M){
+    private int ejercitoDelReyPD(int n, int[]M){ // Una vez que se llena el arreglo da la respuesta entonces es O(n)
         if(n <2){
             return M[n];
         }
@@ -174,4 +177,17 @@ public class Codigos {
         return M[n];
     }
     
+    //  Inciso f
+    // Como construyo la solución es Bottom Up, como recorro un for de n-2 pasos es O(n) y la complejidad es O(1)
+    public int ejercitoDelReyBottomUp(int n){
+        int d0 = 1;
+        int d1 = 1;
+        int res = 1;
+        for(int i = 2; i < n; i++){
+            res += d0 + d1;
+            d0 = d1;
+            d1 = res;
+        }
+        return res;
+    }
 }

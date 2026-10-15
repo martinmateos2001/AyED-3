@@ -18,7 +18,9 @@ public class CodigosTests {
             int n = random.nextInt(20)+2;
             int esperado = ejercitoDelReyFB(n);
             int obtenido = Cod.ejercitoDelRey(n);
+            int obtenido2 = Cod.ejercitoDelReyBottomUp(n);
             assert esperado == obtenido : "Fallo en test " + test + " con n=" + n;
+            assert esperado == obtenido2 : "Fallo BOTTON UP en test " + test + " con n=" + n;
         }
         System.out.println("Exito");
     }
