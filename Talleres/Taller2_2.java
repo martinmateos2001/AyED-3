@@ -1,7 +1,10 @@
-package Talleres;
+// package Talleres;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -14,9 +17,8 @@ public class Taller2_2 {
             return b;
         }
     }
-    public static long minCosto(int[] costo, int[] ruta){
-        long a = costo[1];
-        long b = costo[2];
+    
+    public static long minCosto(int n, long a, long b, int[] ruta){
         // En el peor caso si no le erro, el numero mas grande que se puede obtener es 8*10^21
         long inf = 1_000_000_000_000_000L;
         long subir = 2*a + 2*b;
@@ -27,22 +29,17 @@ public class Taller2_2 {
         // M[1] <- optimo de elegir nivel 2
         long[] M = new long[2];
         M[0] = b;
-        M[1] = inf; // no arrancamos en el nivel 1.
-        for(int i = 1; i<costo[0]; i++){
+        M[1] = inf; // no arrancamos en el nivel 2.
+        for(int i = 0; i < n; i++){
             long opt0 = inf;
             long opt1 = inf; 
-            if(ruta[i] == 0){
-                opt0 = minimo(M[1] + bajar, M[0] + seguirAbajo);
-                opt1 = minimo(M[0]+subir, M[1] + seguirArriba);
+            if(ruta[i] == 1){
+                opt0 = inf;
+                opt1 = M[1] + seguirArriba;  
             }
             else{
-                opt0 = inf;
-                if(i == 1){
-                    opt1 = M[0] + subir;
-                }
-                else{
-                    opt1 = minimo(M[0] + subir, M[1] + seguirArriba);
-                }
+                opt0 = minimo(M[0] + seguirAbajo, M[1]+bajar);
+                opt1 = minimo(M[0] + subir, M[1]+seguirArriba);
             }
             M[0] = opt0;
             M[1] = opt1;
@@ -54,25 +51,20 @@ public class Taller2_2 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         Scanner scanner = new Scanner(br);
         int T = scanner.nextInt();
-        int[][] costos = new int[T][3];
-        ArrayList<int[]> rutas = new ArrayList<>(T);
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        PrintWriter printer = new PrintWriter(bw);
         for(int i = 0; i< T; i++){
-            for(int j = 0; j< 3; j++){
-                costos[i][j] = scanner.nextInt();
-            }
+            int n = scanner.nextInt();
+            long a = scanner.nextLong();
+            long b = scanner.nextLong();
             String r = scanner.next();
-            int n = r.length();
             int[] ruta = new int[n];
             for(int j = 0; j<n; j++){
                 ruta[j] = r.charAt(j) - '0';
             }
-            rutas.add(ruta);
+            printer.println(minCosto(n, a, b, ruta));
         }
         scanner.close();
-        for(int i = 0; i< T; i++){
-            System.out.println(String.valueOf(minCosto(costos[i], rutas.get(i))));
-        }
-        
-
+        printer.close();
     }
 }
