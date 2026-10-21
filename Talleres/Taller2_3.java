@@ -1,4 +1,4 @@
-// package Talleres;
+package Talleres;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
