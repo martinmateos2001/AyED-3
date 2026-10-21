@@ -13,20 +13,29 @@ import java.util.Scanner;
 
 public class Taller2_3{
     public static class AdjList {
-        int n;
-        ArrayList<int[]>[] adj;
-        int[] grados;
-        int[] d;
-        int[] padres;
+        private int n;
+        private int T;
+        private ArrayList<int[]>[] adj;
+        private int[] grados;
+        private int[][] M; // para el nodo v, en la longitud del camino acumulado k_i guardo el minimo tiempo acumulado.
+        private int[][] P; // para el nodo v, en la longitud del camino acumulado k_i guardo el padre talque el tiempo acumulado es minimo
         private int inf = 1500000000;
-
         
-        public AdjList(int n,int T, int[][] aristas){
-            ArrayList<int[]>[] adj = (ArrayList<int[]>[]) new ArrayList<?>[n];
-            for(int i = 0; i<n; i++){
-                adj[i] = new ArrayList<>();
+        public AdjList(int n,int T, int[][] aristas){ // O(n + m)
+            this.n = n;
+            this.T = T;
+            this.adj = (ArrayList<int[]>[]) new ArrayList<?>[n+1];
+            this.M = new int[n+1][n+1];
+            this.P= new int[n+1][n+1];
+            for(int i = 1; i<=n; i++){
+                this.adj[i] = new ArrayList<>();
+                for(int j = 0; j <= n; j++){
+                    this.M[i][j] = inf;
+                    this.P[i][j] = -1;
+                }
             }
-            int[] grados = new int[n];
+            M[1][0] = 0;
+            this.grados = new int[n+1];
             for(int i = 0; i < aristas.length; i++){
                 int u = aristas[i][0];
                 int v = aristas[i][1];
@@ -35,65 +44,82 @@ public class Taller2_3{
                     int[] tupla = new int[2];
                     tupla[0] = v;
                     tupla[1] = t;
-                    adj[u-1].add(tupla);
-                    grados[v-1] += 1;
+                    this.adj[u].add(tupla);
+                    this.grados[v] += 1;
                 }
-                
             }
-            this.adj = adj;
-            this.grados = grados;
-            this.n = n;
+            
         }
 
-        private ArrayList<Integer> ordenTopologico(){
-            int n = grados.length;
+        static class Resultado {
+            int distancia;
+            ArrayList<Integer> camino;
+
+            Resultado(int distancia, ArrayList<Integer> camino){
+                this.distancia=distancia;
+                this.camino=camino;
+            }
+            
+        }
+
+        private ArrayList<Integer> ordenTopologico(){ // O(n+m)
             ArrayList<Integer> res = new ArrayList<>(n); 
             Queue<Integer> Q = new LinkedList<>();
-            for(int i = 0; i < n; i++){
-                if(grados[i] == 0){
+            int[] gradosCopia = grados.clone();
+            for(int i = 1; i <= n; i++){
+                if(gradosCopia[i] == 0){
                     Q.add(i);
                 }
             }
             while (!Q.isEmpty()) {
                 int u = Q.poll();
                 res.add(u);
-                for(int[] v : adj[u]){
-                    grados[v[0]] -= 1;
-                    if(grados[v[0]] == 0){
-                        Q.add(v[0]);
+                for(int[] V : adj[u]){
+                    int v = V[0];
+                    gradosCopia[v] -= 1;
+                    if(gradosCopia[v] == 0){
+                        Q.add(v);
                     }
                 }
             }
             return res;
         }
 
-        private void relajar(int u, int v, int t){
-            if(d[u] < inf && d[v] > d[u] + t){
-                d[v] = d[u] + t;
-                padres[v] = u;
+
+        public void camMinDAGs(){ // O(n+m) + O(m*n) = O(m*n) 
+            ArrayList<Integer> orden = ordenTopologico(); // O(n+m) 
+            for(int u : orden){
+                for(int[] V : adj[u]){ // con el bucle anterior tenemos O(m)
+                    int v = V[0];
+                    int peso = V[1];
+                    for(int k = 1; k <= n ; k++){ // O(n)
+                        if(M[u][k-1] != inf && M[u][k-1] + peso < M[v][k]){
+                            M[v][k] = M[u][k-1] + peso;
+                            P[v][k] = u;
+                        }
+                    }
+                }
             }
         }
 
-        public int[][] camMinDAGs(){
-            ArrayList<Integer> orden = ordenTopologico();
-            this.d = new int[this.n];
-            this.padres = new int[this.n];
-            for(int i = 0; i< this.n; i++){
-                d[i] = this.inf;
-                padres[i] = -1;
+        public Resultado respuesta(){ // O(n*m)
+            camMinDAGs(); // O(n*m)
+            int k = n;
+            while (k>2 && M[n][k] > T) {   // O(n)
+                k--;
             }
-            int s = orden.get(0);
-            d[s] = 0;
-            for(int u : orden){
-                for(int[] v : adj[u]){
-                    relajar(u, v[0], v[1]);
-                }
+            int distancia = k+1;
+            ArrayList<Integer> camino = new ArrayList<>();
+            int p = n;
+            while (p!=-1) { // O(n)
+                camino.addFirst(p);
+                p = P[p][k];
+                k--;
             }
-            int[][] res = new int[2][this.n];
-            res[0] = this.d;
-            res[1] = this.padres;
+            Resultado res = new Resultado(distancia, camino);
             return res;
         }
+        
     }
 
     public static void main(String[] args) {
@@ -114,23 +140,12 @@ public class Taller2_3{
         }
         scanner.close();
         AdjList listAdjacencias = new AdjList(n, T, aristas);
-        int [][] ls = listAdjacencias.camMinDAGs();
-        int[] d = ls[0];
-        int[] padres = ls[1];
-        int u = -1;
-        for(int i = 0; i < n; i++){
-            if(d[i] > u && d[i] <= T){
-                u = i;
-            }
+        AdjList.Resultado res = listAdjacencias.respuesta();
+        printer.println(res.distancia);
+        for (int nodo : res.camino) {
+            printer.print(nodo + " ");
         }
-        ArrayList<Integer> camino = new ArrayList<>();
-        camino.addFirst(u+1);
-        while(u != -1){
-            u = padres[u];
-            camino.addFirst(u+1);
-        }
-        printer.println(camino.size());
-        printer.println(camino);
+        printer.println();
         printer.close();
     }
 }
