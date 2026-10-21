@@ -1,4 +1,4 @@
-package Talleres;
+// package Talleres;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -105,7 +105,7 @@ public class Taller2_3{
         public Resultado respuesta(){ // O(n*m)
             camMinDAGs(); // O(n*m)
             int k = n;
-            while (k>2 && M[n][k] > T) {   // O(n)
+            while (k>=2 && M[n][k] > T) {   // O(n)
                 k--;
             }
             int distancia = k+1;
