@@ -1,6 +1,14 @@
 package Talleres;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.util.Scanner;
+
 public class Taller3_1{
-    public int[] merge(int[] izq, int[] der){
+    public static int[] merge(int[] izq, int[] der){
         int i = 0;
         int j = 0;
         int n = izq.length;
@@ -30,7 +38,8 @@ public class Taller3_1{
         }
         return res;
     }
-    public int[] mergeSort(int[] arr){
+
+    public static int[] mergeSort(int[] arr){
         int n = arr.length;
         if(n<=1){
             return arr;
@@ -50,9 +59,38 @@ public class Taller3_1{
         int[] der_ordenada = mergeSort(der);
 
         return merge(izq_ordenada, der_ordenada);
-
     }
+
+    public static int alumnosSatisfechos(int[] arr){
+        arr = mergeSort(arr);
+        int res = 0; // alumnos satisfechos (o no frustrados)
+        int t = 0; // Tiempo acumulado
+        int n = arr.length;
+        for(int i = 0; i < n; i++) {
+            int ti = arr[i];
+            if(t <= ti){
+                res += 1;
+                t += ti;
+            }
+        }
+        return res;
+    }
+
     public static void main(String[] args) {
-        
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        Scanner scanner = new Scanner(br);
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        PrintWriter printer = new PrintWriter(bw);
+
+        int n = scanner.nextInt();
+        int[] arr = new int[n];
+        for(int i = 0; i < n; i++){
+            arr[i] = scanner.nextInt();
+        }
+        scanner.close();
+
+        int res = alumnosSatisfechos(arr);
+        printer.println(res);
+        printer.close();
     }
 }
